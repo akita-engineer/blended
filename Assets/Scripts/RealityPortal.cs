@@ -140,6 +140,12 @@ public class RealityPortal : MonoBehaviour
         return portalCamera;
     }
 
+    public void SetStereoscopicProjections()
+    {
+        SetStereoProjectionMatrix(Camera.StereoscopicEye.Left, headCameraLeft, portalCameraLeft);
+        SetStereoProjectionMatrix(Camera.StereoscopicEye.Right, headCameraRight, portalCameraRight);
+    }
+
     public void Init()
     {
         portalPropertyBlock = new MaterialPropertyBlock();
@@ -191,6 +197,16 @@ public class RealityPortal : MonoBehaviour
         {
             portalCameraLeft = SetupPortalCamera(headCameraLeft, materialLeftEyeTexProperty);
             portalCameraRight = SetupPortalCamera(headCameraRight, materialRightEyeTexProperty);
+
+            // We create all the cameras for the returning portal but we disable them right that instant.
+            // We render passthrough and don't show the actual content but we need their positions and etc. since we teleport on them
+            // TODO: address the performance issue with too many cameras
+            if (isInVirtualWorld)
+            {
+                portalCameraCenter.enabled = false;
+                portalCameraLeft.enabled = false;
+                portalCameraRight.enabled = false;
+            }
         }
 
         isInit = true;
@@ -258,10 +274,9 @@ public class RealityPortal : MonoBehaviour
 
     private void Start()
     {
-        if (IsStereoMode)
+        if (IsStereoMode && isInit)
         {
-            SetStereoProjectionMatrix(Camera.StereoscopicEye.Left, headCameraLeft, portalCameraLeft);
-            SetStereoProjectionMatrix(Camera.StereoscopicEye.Right, headCameraRight, portalCameraRight);
+            SetStereoscopicProjections();
         }
     }
 
@@ -330,6 +345,11 @@ public class RealityPortal : MonoBehaviour
             if (!nextDestination.isInit)
             {
                 nextDestination.Init();
+            }
+
+            if (nextDestination.IsStereoMode)
+            {
+                nextDestination.SetStereoscopicProjections();
             }
 
             portalCameraCenter.GetComponent<Skybox>().material = nextDestination.sourceSceneSetup.SkyboxMaterial;
