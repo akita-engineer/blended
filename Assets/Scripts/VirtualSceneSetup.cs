@@ -16,6 +16,11 @@ public class VirtualSceneSetup : MonoBehaviour
 
     private void Awake()
     {
+        if (music == null)
+        {
+            return;
+        }
+
         music.playOnAwake = false;
         music.loop = true;
 
@@ -30,6 +35,11 @@ public class VirtualSceneSetup : MonoBehaviour
 
     public void StartScene()
     {
+        if (music == null)
+        {
+            return;
+        }
+
         if (paused)
         {
             paused = false;
@@ -42,6 +52,11 @@ public class VirtualSceneSetup : MonoBehaviour
 
     public void StopScene()
     {
+        if (music == null)
+        {
+            return;
+        }
+
         if (music.isPlaying)
         {
             paused = true;
