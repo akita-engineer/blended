@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 46537168}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: SphynxScene_v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ Transform:
   - {fileID: 543450652010580690}
   - {fileID: 5200343836462195458}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &489798939
 GameObject:
@@ -220,7 +220,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &611233289
 Rigidbody:
@@ -298,7 +298,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 5111
+    m_Bits: 119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -381,6 +381,10 @@ PrefabInstance:
     - target: {fileID: 2698338200229191658, guid: b03a3500237584af0b3b10e00fcfa800, type: 3}
       propertyPath: m_Name
       value: VR_Rig
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698338200229191658, guid: b03a3500237584af0b3b10e00fcfa800, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b03a3500237584af0b3b10e00fcfa800, type: 3}
@@ -829,7 +833,7 @@ GameObject:
   - component: {fileID: 1814771865}
   - component: {fileID: 1814771867}
   - component: {fileID: 1814771866}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: SCENE_SETUP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1054,20 +1058,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 99.5, y: -365, z: -27.03}
---- !u!64 &2133569061
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132147489165416}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 973877516759717424, guid: b16ea8ff65b1a4e8bb0dcaae930f9f26, type: 3}
 --- !u!4 &543450652010580690
 Transform:
   m_ObjectHideFlags: 0
@@ -1093,8 +1083,7 @@ GameObject:
   - component: {fileID: 543450652010580690}
   - component: {fileID: 3469287838074570103}
   - component: {fileID: 1711813855154565565}
-  - component: {fileID: 2133569061}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Foundation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1162,7 +1151,7 @@ GameObject:
   - component: {fileID: 6988595373041949256}
   - component: {fileID: 5897956670800772828}
   - component: {fileID: 3935436154075525178}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Sphinx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
