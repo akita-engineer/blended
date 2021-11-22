@@ -84,8 +84,8 @@ public class RealityPortal : MonoBehaviour
     {
         enterSide = side;
 
-        Collider sideACollider = sideA.GetComponent<Collider>();
-        Collider sideBCollider = sideB.GetComponent<Collider>();
+        Collider sideACollider = sideA.GetComponentInChildren<Collider>();
+        Collider sideBCollider = sideB.GetComponentInChildren<Collider>();
 
         MeshRenderer sideARenderer = sideA.RenderingPlane;
         MeshRenderer sideBRenderer = sideB.RenderingPlane;
@@ -101,6 +101,9 @@ public class RealityPortal : MonoBehaviour
         // Renderers
         sideARenderer.enabled = side == PortalSide.SideA;
         sideBRenderer.enabled = side == PortalSide.SideB;
+
+        sideA.gameObject.SetActive(side == PortalSide.SideA);
+        sideB.gameObject.SetActive(side == PortalSide.SideB);
 
         // Save references to the sides for future
         renderingPlane = side == PortalSide.SideA ? sideA.RenderingPlane : sideB.RenderingPlane;

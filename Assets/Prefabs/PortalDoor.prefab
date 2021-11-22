@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1485040714043242081
 Transform:
   m_ObjectHideFlags: 0
@@ -246,11 +246,12 @@ MonoBehaviour:
   willBeSetByOther: 0
   isInVirtualWorld: 0
   pairPortal: {fileID: 0}
+  sourceSceneSetup: {fileID: 0}
+  destinationSceneSetup: {fileID: 0}
   enterSide: 0
   portalCameraCullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  portalCameraSkyboxMaterial: {fileID: 0}
   userCameraCullingMaskAfterTeleport:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -449,6 +450,10 @@ PrefabInstance:
     - target: {fileID: 1009563353530110564, guid: c9729258f96cd4b83b903c78f3679ec1, type: 3}
       propertyPath: m_Name
       value: PortalMatter_Side_B
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009563353530110564, guid: c9729258f96cd4b83b903c78f3679ec1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5510725918546953135, guid: c9729258f96cd4b83b903c78f3679ec1, type: 3}
       propertyPath: side

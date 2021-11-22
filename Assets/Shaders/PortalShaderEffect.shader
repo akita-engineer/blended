@@ -8,6 +8,8 @@ Shader "Unlit/PortalShaderEffect"
 		_LeftEyeTex ("Texture", 2D) = "white" {}
 		_RightEyeTex ("Texture", 2D) = "white" {}
 		_CenterEyeTex ("Texture", 2D) = "white" {}
+
+		_RejectPositiveYNormals ("Float", Float) = 0
 	}
 	SubShader
 	{
@@ -30,6 +32,7 @@ Shader "Unlit/PortalShaderEffect"
 			struct appdata
 			{
 				float4 vertex : POSITION;
+				float4 normal : NORMAL;
 				float2 uv : TEXCOORD0;
 			};
 
@@ -38,12 +41,14 @@ Shader "Unlit/PortalShaderEffect"
 				//float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
 				float4 screenPos : TEXCOORD1;
+				float3 localNormal : TEXCOORD2;
 			};
 
 			v2f vert (appdata v)
 			{
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.localNormal = v.normal;
 				o.screenPos = ComputeScreenPos(o.vertex);
 				return o;
 			}
@@ -57,8 +62,16 @@ Shader "Unlit/PortalShaderEffect"
 			sampler2D _RightEyeTex;
 			sampler2D _CenterEyeTex;
 
+			float _RejectPositiveYNormals;
+
 			fixed4 frag (v2f i) : SV_Target
 			{
+				if (_RejectPositiveYNormals > 0) {
+					if (i.localNormal.y > 0) { 
+						discard;
+					}
+                }
+				
 				i.screenPos /= i.screenPos.w;
 				float2 portalUV = float2(i.screenPos.x, i.screenPos.y);
 
