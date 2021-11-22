@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -62,6 +63,7 @@ public class RealityPortal : MonoBehaviour
     private MaterialPropertyBlock portalPropertyBlock;
 
     private bool allowTeleport = true;
+    private bool isInit;
 
     //// SETTERS
 
@@ -190,6 +192,8 @@ public class RealityPortal : MonoBehaviour
             portalCameraLeft = SetupPortalCamera(headCameraLeft, materialLeftEyeTexProperty);
             portalCameraRight = SetupPortalCamera(headCameraRight, materialRightEyeTexProperty);
         }
+
+        isInit = true;
     }
 
     //// CAMERA AND TELEPORT MATH
@@ -273,6 +277,11 @@ public class RealityPortal : MonoBehaviour
 
     private void OnBeforeRender()
     {
+        if (!isInit)
+        {
+            return;
+        }
+
         if (IsStereoMode)
         {
             UpdateXRCamera(XRNode.CenterEye, portalCameraCenter);
@@ -281,6 +290,55 @@ public class RealityPortal : MonoBehaviour
         } else
         {
             UpdateCenterPortalCamera(headCameraCenter, portalCameraCenter);
+        }
+    }
+
+    private void Update()
+    {
+        // TODO: hack for now - this means there must be ONE real world portal
+        if (isInVirtualWorld)
+        {
+            return;
+        }
+
+        if (OVRInput.GetDown(OVRInput.Button.One) || Input.GetKeyDown(KeyCode.Space))
+        {
+            RealityPortal[] portals = FindObjectsOfType<RealityPortal>();
+            List<RealityPortal> destinations = new List<RealityPortal>();
+
+            foreach (RealityPortal portal in portals)
+            {
+                if (portal.isInVirtualWorld)
+                {
+                    destinations.Add(portal);
+                }
+            }
+
+          
+            int currentIndex = destinations.IndexOf(pairPortal);
+            int nextIndex = (currentIndex + 1) % destinations.Count;
+            Debug.Log(currentIndex);
+            Debug.Log(nextIndex);
+            RealityPortal nextDestination = destinations[nextIndex];
+
+            pairPortal = nextDestination;
+            destinationSceneSetup = nextDestination.sourceSceneSetup;
+
+            nextDestination.SetEnterSide(enterSide == PortalSide.SideA ? PortalSide.SideB : PortalSide.SideA);
+            nextDestination.SetPortalTarget(this);
+
+            if (!nextDestination.isInit)
+            {
+                nextDestination.Init();
+            }
+
+            portalCameraCenter.GetComponent<Skybox>().material = nextDestination.sourceSceneSetup.SkyboxMaterial;
+
+            if (IsStereoMode)
+            {
+                portalCameraLeft.GetComponent<Skybox>().material = nextDestination.sourceSceneSetup.SkyboxMaterial;
+                portalCameraRight.GetComponent<Skybox>().material = nextDestination.sourceSceneSetup.SkyboxMaterial;
+            }  
         }
     }
 
